@@ -7,7 +7,7 @@
  * Author: Alex Mangini
  * Author URI: http://kolakube.com/about/
  * Author email: alex@kolakube.com
- * License: GPL2
+ * License: GPL-2.0+
  * Requires at least: 3.8
  * Tested up to: 4.0
  * Text Domain: kol-email-forms
