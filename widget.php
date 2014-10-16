@@ -46,8 +46,10 @@ class kol_email_form extends WP_Widget {
 		$this->WP_Widget(
 			'kol_email',
 			$kol_email->strings['widget_name'],
-			array( 'description' => $kol_email->strings['widget_description']
-		) );
+			array(
+				'description' => $kol_email->strings['widget_description'],
+			)
+		);
 
 		$this->email      = get_option( 'kol_email' ); #api
 		$this->email_data = get_option( 'kol_email_data' ); #api
@@ -62,122 +64,126 @@ class kol_email_form extends WP_Widget {
 		$title = $val['title'];
 		$desc  = $val['desc'];
 		$list  = $val['list'];
-	?>
+		?>
 
 		<?php echo $args['before_widget']; ?>
 
-			<!-- Intro -->
+		<!-- Intro -->
 
-			<?php if ( $title || $desc ) : ?>
+		<?php if ( $title || $desc ) : ?>
 
-				<div class="kol-email-intro mb-single">
+			<div class="kol-email-intro mb-single">
 
-					<?php if ( $title ) : ?>
-						<?php echo $args['before_title'] . $title . $args['after_title']; ?>
+				<?php if ( $title ) : ?>
+					<?php echo $args['before_title'] . $title . $args['after_title']; ?>
+				<?php endif; ?>
+
+				<?php if ( $desc ) : ?>
+					<?php echo wpautop( $desc ); ?>
+				<?php endif; ?>
+
+			</div>
+
+		<?php endif; ?>
+
+		<!-- Email Form -->
+
+		<?php if ( $service == 'custom_code' ) : ?>
+
+			<div class="kol-email-form clear">
+
+				<?php echo $val['custom_code']; ?>
+
+			</div>
+
+		<?php elseif ( $list && $this->email_data && in_array( $list, $this->email_data['lists_ids'] ) ) :
+
+			$field_name = $val['form_fields_name'];
+
+			$label_name  = ! empty( $val['name_label'] ) ? esc_attr( $val['name_label'] ) : $kol_email->strings['name_label'];
+			$label_email = ! empty( $val['email_label'] ) ? esc_attr( $val['email_label'] ) : $kol_email->strings['email_label'];
+			$button_text = ! empty( $val['button_text'] ) ? esc_attr( $val['button_text'] ) : $kol_email->strings['button_text'];
+
+			$classes = ! empty( $val['classes'] ) ? esc_attr( $val['classes'] ) : 'form-full';
+
+			if ( $service == 'aweber' ) {
+				$action    = 'http://www.aweber.com/scripts/addlead.pl';
+				$att_name  = 'name';
+				$att_email = 'email';
+
+				$image        = $val['tracking_image'];
+				$form_id      = $val['form_id'];
+				$thank_you    = $val['thank_you'];
+				$already_subs = $val['already_subscribed'];
+				$ad_tracking  = $val['ad_tracking'];
+			}
+
+			elseif ( $service == 'mailchimp' ) {
+				$data = get_option( 'kol_email_data' );
+				$lists      = $data['lists_data'];
+				$lists_data = parse_url( $lists[ $list ]['url'] ); // convert URL params to array
+				parse_str( $lists_data['query'] ); // convert query params to string vars (creates variables $u and $id)
+
+				$action    = esc_url_raw( $lists_data['scheme'] . '://' . $lists_data['host'] . '/subscribe/post/' );
+				$att_name  = 'MERGE1';
+				$att_email = 'MERGE0';
+			}
+		?>
+
+			<div class="kol-email-form clear">
+
+				<form method="post" action="<?php esc_attr_e( $action ); ?>" class="<?php echo $classes; ?>">
+
+					<?php if ( $service == 'aweber' ) : ?>
+
+						<?php if ( ! empty( $form_id ) ) : ?>
+							<input type="hidden" name="meta_web_form_id" value="<?php esc_attr_e( $form_id ); ?>" />
+						<?php endif; ?>
+						<input type="hidden" name="meta_split_id" value="" />
+						<input type="hidden" name="listname" value="<?php esc_attr_e( $list ); ?>" />
+						<?php if ( ! empty( $thank_you ) ) : ?>
+							<input type="hidden" name="redirect" value="<?php echo get_permalink( $thank_you ); ?>" />
+						<?php endif; ?>
+						<?php if ( ! empty( $already_subs ) ) : ?>
+							<input type="hidden" name="meta_redirect_onlist" value="<?php echo get_permalink( $already_subs ); ?>" />
+						<?php endif; ?>
+						<?php if ( ! empty( $ad_tracking ) ) : ?>
+							<input type="hidden" name="meta_adtracking" value="<?php esc_attr_e( $ad_tracking ); ?>" />
+						<?php endif; ?>
+						<input type="hidden" name="meta_message" value="1" />
+						<input type="hidden" name="meta_required" value="<?php echo $field_name ? "$att_name,$att_email" : $att_email; ?>" />
+						<input type="hidden" name="meta_tooltip" value="" />
+
 					<?php endif; ?>
 
-					<?php if ( $desc ) : ?>
-						<?php echo wpautop( $desc ); ?>
+					<?php if ( $field_name ) : ?>
+						<input type="text" name="<?php esc_attr_e( $att_name ); ?>" id="kol-email-field-name" class="kol-email-field-name form-input icon-name" placeholder="<?php echo $label_name; ?>" />
 					<?php endif; ?>
 
-				</div>
+					<input type="email" name="<?php esc_attr_e( $att_email ); ?>" id="kol-email-field-email" placeholder="<?php echo $label_email; ?>" class="kol-email-field-name form-input icon-email" />
 
-			<?php endif; ?>
+					<?php if ( $service == 'aweber' && ! empty( $image ) ) : ?>
+						<img src="http://forms.aweber.com/form/displays.htm?id=<?php esc_attr_e( $image ); ?>" style="display: none;" alt="" />
+					<?php endif; ?>
 
-			<!-- Email Form -->
+					<?php if ( $service == 'mailchimp' ) : ?>
+						<input type="hidden" name="u" value="<?php esc_attr_e( $u ); ?>">
+						<input type="hidden" name="id" value="<?php esc_attr_e( $id ); ?>">
+					<?php endif; ?>
 
-			<?php if ( $service == 'custom_code' ) : ?>
+					<button class="kol-email-field-submit form-submit"><?php echo $button_text; ?></button>
 
-				<div class="kol-email-form clear">
+				</form>
 
-					<?php echo $val['custom_code']; ?>
+			</div>
 
-				</div>
-
-			<?php elseif ( $list && $this->email_data && in_array( $list, $this->email_data['lists_ids'] ) ) :
-				$field_name = $val['form_fields_name'];
-
-				$label_name  = ! empty( $val['name_label'] ) ? esc_attr( $val['name_label'] ) : $kol_email->strings['name_label'];
-				$label_email = ! empty( $val['email_label'] ) ? esc_attr( $val['email_label'] ) : $kol_email->strings['email_label'];
-				$button_text = ! empty( $val['button_text'] ) ? esc_attr( $val['button_text'] ) : $kol_email->strings['button_text'];
-
-				$classes = ! empty( $val['classes'] ) ? esc_attr( $val['classes'] ) : 'form-full';
-
-				if ( $service == 'aweber' ) {
-					$action    = 'http://www.aweber.com/scripts/addlead.pl';
-					$att_name  = 'name';
-					$att_email = 'email';
-
-					$image        = $val['tracking_image'];
-					$form_id      = $val['form_id'];
-					$thank_you    = $val['thank_you'];
-					$already_subs = $val['already_subscribed'];
-					$ad_tracking  = $val['ad_tracking'];
-				}
-				elseif ( $service == 'mailchimp' ) {
-					$data = get_option( 'kol_email_data' );
-					$lists      = $data['lists_data'];
-					$lists_data = parse_url( $lists[ $list ]['url'] ); // convert URL params to array
-					parse_str( $lists_data['query'] ); // convert query params to string vars (creates variables $u and $id)
-
-					$action    = esc_url_raw( $lists_data['scheme'] . '://' . $lists_data['host'] . '/subscribe/post/' );
-					$att_name  = 'MERGE1';
-					$att_email = 'MERGE0';
-				}
-			?>
-
-				<div class="kol-email-form clear">
-
-					<form method="post" action="<?php esc_attr_e( $action ); ?>" class="<?php echo $classes; ?>">
-
-						<?php if ( $service == 'aweber' ) : ?>
-
-							<?php if ( ! empty( $form_id ) ) : ?>
-								<input type="hidden" name="meta_web_form_id" value="<?php esc_attr_e( $form_id ); ?>" />
-							<?php endif; ?>
-							<input type="hidden" name="meta_split_id" value="" />
-							<input type="hidden" name="listname" value="<?php esc_attr_e( $list ); ?>" />
-							<?php if ( ! empty( $thank_you ) ) : ?>
-								<input type="hidden" name="redirect" value="<?php echo get_permalink( $thank_you ); ?>" />
-							<?php endif; ?>
-							<?php if ( ! empty( $already_subs ) ) : ?>
-								<input type="hidden" name="meta_redirect_onlist" value="<?php echo get_permalink( $already_subs ); ?>" />
-							<?php endif; ?>
-							<?php if ( ! empty( $ad_tracking ) ) : ?>
-								<input type="hidden" name="meta_adtracking" value="<?php esc_attr_e( $ad_tracking ); ?>" />
-							<?php endif; ?>
-							<input type="hidden" name="meta_message" value="1" />
-							<input type="hidden" name="meta_required" value="<?php echo $field_name ? "$att_name,$att_email" : $att_email; ?>" />
-							<input type="hidden" name="meta_tooltip" value="" />
-
-						<?php endif; ?>
-
-						<?php if ( $field_name ) : ?>
-							<input type="text" name="<?php esc_attr_e( $att_name ); ?>" id="kol-email-field-name" class="kol-email-field-name form-input icon-name" placeholder="<?php echo $label_name; ?>" />
-						<?php endif; ?>
-
-						<input type="email" name="<?php esc_attr_e( $att_email ); ?>" id="kol-email-field-email" placeholder="<?php echo $label_email; ?>" class="kol-email-field-name form-input icon-email" />
-
-						<?php if ( $service == 'aweber' && ! empty( $image ) ) : ?>
-							<img src="http://forms.aweber.com/form/displays.htm?id=<?php esc_attr_e( $image ); ?>" style="display: none;" alt="" />
-						<?php endif; ?>
-
-						<?php if ( $service == 'mailchimp' ) : ?>
-							<input type="hidden" name="u" value="<?php esc_attr_e( $u ); ?>">
-							<input type="hidden" name="id" value="<?php esc_attr_e( $id ); ?>">
-						<?php endif; ?>
-
-						<button class="kol-email-field-submit form-submit"><?php echo $button_text; ?></button>
-
-					</form>
-
-				</div>
-
-			<?php endif; ?>
+		<?php endif; ?>
 
 		<?php echo $args['after_widget']; ?>
 
-	<?php }
+	<?php
+
+	}
 
 
 	public function update( $new, $val ) {
@@ -225,7 +231,7 @@ class kol_email_form extends WP_Widget {
 
 		$service = $this->email['service'];
 		$data    = isset( $this->email_data['lists_options'] ) ? $this->email_data['lists_options'] : '';
-	?>
+		?>
 
 		<?php if ( $data || $service == 'custom_code' ) : ?>
 
@@ -273,7 +279,7 @@ class kol_email_form extends WP_Widget {
 					<select id="<?php echo $this->get_field_id( 'list' ); ?>" name="<?php echo $this->get_field_name( 'list' ); ?>" style="max-width: 100%;">
 						<option value=""><?php echo $kol_email->strings['select_list']; ?></option>
 
-						<?php foreach( $this->email_data['lists_options'] as $list => $name ) : ?>
+						<?php foreach ( $this->email_data['lists_options'] as $list => $name ) : ?>
 							<option value="<?php esc_attr_e( $list ); ?>" <?php selected( $val['list'], $list, true ); ?>><?php echo $name; ?></option>
 						<?php endforeach; ?>
 					</select>
@@ -291,10 +297,10 @@ class kol_email_form extends WP_Widget {
 
 						$select = array(
 							'thank_you' => array(
-								'label' => $kol_email->strings['thank_you_page']
+								'label' => $kol_email->strings['thank_you_page'],
 							),
 							'already_subscribed' => array(
-								'label' => $kol_email->strings['already_subs_page']
+								'label' => $kol_email->strings['already_subs_page'],
 							)
 						);
 					?>
@@ -307,7 +313,7 @@ class kol_email_form extends WP_Widget {
 								<select id="<?php echo $this->get_field_id( $select_id ); ?>" name="<?php echo $this->get_field_name( $select_id ); ?>" style="max-width: 100%;">
 									<option value=""><?php echo $kol_email->strings['select_page']; ?></option>
 
-									<?php foreach( $pages as $page_id => $page_name ) : ?>
+									<?php foreach ( $pages as $page_id => $page_name ) : ?>
 										<option value="<?php esc_attr_e( $page_id ); ?>" <?php selected( $val[$select_id], $page_id, true ); ?>><?php echo $page_name; ?></option>
 									<?php endforeach; ?>
 								</select>
@@ -365,13 +371,13 @@ class kol_email_form extends WP_Widget {
 
 						<?php $tracking = array(
 							'form_id' => array(
-								'label' => $kol_email->strings['widget_form_id']
+								'label' => $kol_email->strings['widget_form_id'],
 							),
 							'ad_tracking' => array(
-								'label' => $kol_email->strings['widget_ad_tracking']
+								'label' => $kol_email->strings['widget_ad_tracking'],
 							),
 							'tracking_image' => array(
-								'label' => $kol_email->strings['widget_image_id']
+								'label' => $kol_email->strings['widget_image_id'],
 							)
 						); ?>
 

@@ -65,7 +65,7 @@ class kol_email_admin {
 
 	public function admin_page() {
 		global $kol_email;
-	?>
+		?>
 
 		<div class="wrap kol">
 
@@ -99,7 +99,7 @@ class kol_email_admin {
 			$connected = $kol_email->strings['aweber'];
 		elseif ( $service == 'mailchimp' )
 			$connected = $kol_email->strings['mailchimp'];
-	?>
+		?>
 
 		<div id="kol-email-list">
 
@@ -121,7 +121,7 @@ class kol_email_admin {
 					''            => $kol_email->strings['select_service'],
 					'mailchimp'   => $kol_email->strings['mailchimp'],
 					'aweber'      => $kol_email->strings['aweber'],
-					'custom_code' => $kol_email->strings['custom_code']
+					'custom_code' => $kol_email->strings['custom_code'],
 				);
 
 				$api_key = isset( $this->_get_option['api_key'] ) ? $this->_get_option['api_key'] : '';
@@ -189,13 +189,17 @@ class kol_email_admin {
 						<?php endif; ?>
 
 						<?php if ( $service == 'custom_code' ) : ?>
-							<?php update_option( 'kol_email_data', array(
-								'save' => array(
-									'custom_code' => array(
-										'type' => 'code'
-									)
+							<?php
+							update_option( 'kol_email_data',
+								array(
+									'save' => array(
+										'custom_code' => array(
+											'type' => 'code',
+										),
+									),
 								)
-							) ); ?>
+							);
+							?>
 						<?php endif; ?>
 
 						<?php submit_button(); ?>
