@@ -52,7 +52,7 @@ class kol_email_api {
 
 	public function connect_scripts() {
 		global $kol_email;
-	?>
+		?>
 
 		<script>
 
