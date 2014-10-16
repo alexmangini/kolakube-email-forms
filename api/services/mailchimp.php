@@ -254,4 +254,3 @@ class kol_email_mailchimp {
 'ping'=>array());
 
 }
-?>
