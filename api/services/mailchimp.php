@@ -9,6 +9,11 @@
  * @since       1.0.0
  */
 
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class kol_email_mailchimp {
 	var $version = "1.3";
 	var $errorMessage;

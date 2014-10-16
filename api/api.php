@@ -9,8 +9,10 @@
  * @since       1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
-
+// Prevent direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class kol_email_api {
 
 	public $auth = array(
