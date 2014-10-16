@@ -104,7 +104,7 @@ class kol_email_admin {
 			<?php else :
 				$custom      = $service == 'custom_code' ? true : false;
 				$custom_icon = $custom ? 'yes' : 'no';
-		
+
 				$services = array(
 					''            => $kol_email->strings['select_service'],
 					'mailchimp'   => $kol_email->strings['mailchimp'],
@@ -112,19 +112,19 @@ class kol_email_admin {
 					'custom_code' => $kol_email->strings['custom_code']
 				);
 
-				$api_key = isset( $this->_get_option['api_key'] ) ? $this->_get_option['api_key'] : '';		
+				$api_key = isset( $this->_get_option['api_key'] ) ? $this->_get_option['api_key'] : '';
 			?>
 
 				<!-- Step 1 -->
-	
+
 				<div class="kol-email-setup" style="display: <?php echo empty( $lists ) ? 'block' : 'none'; ?>;">
-	
+
 					<!-- Select Service -->
-	
+
 					<div id="kol-email-service" class="kol-content-wrap">
-			
+
 						<h3><?php echo $kol_email->strings['step1']; ?></h3>
-				
+
 						<p><?php echo $kol_email->strings['connect_notice']; ?></p>
 
 						<select name="kol_email[service]" id="kol_email_service">
@@ -134,31 +134,31 @@ class kol_email_admin {
 						</select>
 
 					</div>
-	
+
 					<!-- Enter Key -->
-	
+
 					<div id="kol-email-key" style="display: none;">
-	
+
 						<hr class="kol-hr" />
-	
+
 						<div class="kol-content-wrap">
-	
+
 							<h3><?php echo $kol_email->strings['step2']; ?></h3>
-	
+
 							<p><a href="#" id="kol-email-auth" class="button" target="_blank"><?php echo $kol_email->strings['get_auth_code']; ?></a></p>
-	
+
 							<p class="description"><?php echo $kol_email->strings['get_auth_code_notice']; ?></p>
 
 						</div>
-	
+
 						<p><textarea name="kol_email[api_key]" id="kol_email_api_key" class="large-text" rows="6"><?php echo esc_textarea( $api_key ); ?></textarea></p>
-	
+
 						<p><input type="submit" id="kol-email-connect" class="button-primary" value="<?php esc_attr_e( $kol_email->strings['connect'] ); ?>" /></p>
 
 					</div>
-	
+
 					<!-- Custom HTML Form -->
-	
+
 					<div id="kol-email-custom" style="display: <?php echo $service == 'custom_code' ? 'block' : 'none'; ?>;">
 
 						<hr class="kol-hr" />
@@ -187,9 +187,9 @@ class kol_email_admin {
 						<?php endif; ?>
 
 						<?php submit_button(); ?>
-	
+
 					</div>
-	
+
 				</div>
 
 			<?php endif; ?>

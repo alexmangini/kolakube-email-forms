@@ -3,22 +3,22 @@ class kol_email_mailchimp {
     var $version = "1.3";
     var $errorMessage;
     var $errorCode;
-    
+
     /**
      * Cache the information on the API location on the server
      */
     var $apiUrl;
-    
+
     /**
      * Default to a 300 second timeout on server calls
      */
-    var $timeout = 300; 
-    
+    var $timeout = 300;
+
     /**
      * Default to a 8K chunk size
      */
     var $chunkSize = 8192;
-    
+
     /**
      * Cache the user api_key so we only have to log in once per client instantiation
      */
@@ -28,10 +28,10 @@ class kol_email_mailchimp {
      * Cache the user api_key so we only have to log in once per client instantiation
      */
     var $secure = false;
-    
+
     /**
      * Connect to the MailChimp API for a given list.
-     * 
+     *
      * @param string $apikey Your MailChimp apikey
      * @param string $secure Whether or not this should use a secure connection
      */
@@ -56,7 +56,7 @@ class kol_email_mailchimp {
             $this->secure = false;
         }
     }
-    
+
     /**
      * Actually connect to the server and call the requested methods, parsing the result
      * You should never have to call this function manually
@@ -88,7 +88,7 @@ class kol_email_mailchimp {
         if ($sep_changed){
             ini_set("arg_separator.output", $orig_sep);
         }
-        
+
         $payload = "POST " . $this->apiUrl["path"] . "?" . $this->apiUrl["query"] . "&method=" . $method . " HTTP/1.0\r\n";
         $payload .= "Host: " . $host . "\r\n";
         $payload .= "User-Agent: MCAPImini/" . $this->version ."\r\n";
@@ -96,7 +96,7 @@ class kol_email_mailchimp {
         $payload .= "Content-length: " . strlen($post_vars) . "\r\n";
         $payload .= "Connection: close \r\n\r\n";
         $payload .= $post_vars;
-        
+
         ob_start();
         if ($this->secure){
             $sock = fsockopen("ssl://".$host, 443, $errno, $errstr, 30);
@@ -109,7 +109,7 @@ class kol_email_mailchimp {
             ob_end_clean();
             return false;
         }
-        
+
         $response = "";
         fwrite($sock, $payload);
         stream_set_timeout($sock, $this->timeout);
@@ -136,9 +136,9 @@ class kol_email_mailchimp {
                 break;
             }
         }
-        
+
         if(ini_get("magic_quotes_runtime")) $response = stripslashes($response);
-        
+
         $serial = unserialize($response);
         if($response && $serial === false) {
         	$response = array("error" => "Bad Response.  Got This: " . $response, "code" => "-99");
@@ -154,10 +154,10 @@ class kol_email_mailchimp {
             $this->errorCode = $error_code;
             return false;
         }
-        
+
         return $response;
     }
-    
+
     protected $function_map = array('campaignUnschedule'=>array("cid"),
 'campaignSchedule'=>array("cid","schedule_time","schedule_time_b"),
 'campaignResume'=>array("cid"),

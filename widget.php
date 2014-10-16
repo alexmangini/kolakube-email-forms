@@ -59,7 +59,7 @@ class kol_email_form extends WP_Widget {
 			<?php if ( $title || $desc ) : ?>
 
 				<div class="kol-email-intro mb-single">
-	
+
 					<?php if ( $title ) : ?>
 						<?php echo $args['before_title'] . $title . $args['after_title']; ?>
 					<?php endif; ?>
@@ -119,7 +119,7 @@ class kol_email_form extends WP_Widget {
 					<form method="post" action="<?php esc_attr_e( $action ); ?>" class="<?php echo $classes; ?>">
 
 						<?php if ( $service == 'aweber' ) : ?>
-			
+
 							<?php if ( ! empty( $form_id ) ) : ?>
 								<input type="hidden" name="meta_web_form_id" value="<?php esc_attr_e( $form_id ); ?>" />
 							<?php endif; ?>
@@ -137,26 +137,26 @@ class kol_email_form extends WP_Widget {
 							<input type="hidden" name="meta_message" value="1" />
 							<input type="hidden" name="meta_required" value="<?php echo $field_name ? "$att_name,$att_email" : $att_email; ?>" />
 							<input type="hidden" name="meta_tooltip" value="" />
-				
+
 						<?php endif; ?>
-				
+
 						<?php if ( $field_name ) : ?>
 							<input type="text" name="<?php esc_attr_e( $att_name ); ?>" id="kol-email-field-name" class="kol-email-field-name form-input icon-name" placeholder="<?php echo $label_name; ?>" />
 						<?php endif; ?>
-				
+
 						<input type="email" name="<?php esc_attr_e( $att_email ); ?>" id="kol-email-field-email" placeholder="<?php echo $label_email; ?>" class="kol-email-field-name form-input icon-email" />
-				
+
 						<?php if ( $service == 'aweber' && ! empty( $image ) ) : ?>
 							<img src="http://forms.aweber.com/form/displays.htm?id=<?php esc_attr_e( $image ); ?>" style="display: none;" alt="" />
 						<?php endif; ?>
-				
+
 						<?php if ( $service == 'mailchimp' ) : ?>
 							<input type="hidden" name="u" value="<?php esc_attr_e( $u ); ?>">
 							<input type="hidden" name="id" value="<?php esc_attr_e( $id ); ?>">
 						<?php endif; ?>
-				
+
 						<button class="kol-email-field-submit form-submit"><?php echo $button_text; ?></button>
-				
+
 					</form>
 
 				</div>
@@ -215,24 +215,24 @@ class kol_email_form extends WP_Widget {
 		) );
 
 		$service = $this->email['service'];
-		$data    = isset( $this->email_data['lists_options'] ) ? $this->email_data['lists_options'] : '';	
+		$data    = isset( $this->email_data['lists_options'] ) ? $this->email_data['lists_options'] : '';
 	?>
 
 		<?php if ( $data || $service == 'custom_code' ) : ?>
 
 			<!-- Title -->
-	
+
 			<p>
 				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php echo $kol_email->strings['widget_title']; ?>:</label>
-	
+
 				<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php esc_attr_e( $val['title'] ); ?>" class="widefat" />
 			</p>
-	
+
 			<!-- Description -->
-	
+
 			<p>
 				<label for="<?php echo $this->get_field_id( 'desc' ); ?>"><?php echo $kol_email->strings['widget_desc']; ?>:</label>
-	
+
 				<textarea id="<?php echo $this->get_field_id( 'desc' ); ?>" name="<?php echo $this->get_field_name( 'desc' ); ?>" class="widefat" rows="4"><?php printf( '%s', esc_textarea( $val['desc'] ) ); ?></textarea>
 			</p>
 
@@ -241,45 +241,45 @@ class kol_email_form extends WP_Widget {
 		<?php if ( $service == 'custom_code' ) : ?>
 
 			<!-- Custom Code -->
-	
+
 			<p>
 				<label for="<?php echo $this->get_field_id( 'custom_code' ); ?>"><?php echo $kol_email->strings['widget_custom_code']; ?>:</label>
-	
+
 				<textarea id="<?php echo $this->get_field_id( 'custom_code' ); ?>" name="<?php echo $this->get_field_name( 'custom_code' ); ?>" class="widefat" rows="7"><?php printf( '%s', esc_textarea( $val['custom_code'] ) ); ?></textarea>
 			</p>
 
 		<?php else : ?>
 
 			<?php if ( empty( $data ) ) : ?>
-	
+
 				<p><?php echo $kol_email->strings['before_use']; ?></p>
 
 			<?php else : ?>
 
 				<!-- Select List -->
-		
+
 				<p>
 					<label for="<?php echo $this->get_field_id( 'list' ); ?>"><?php echo $kol_email->strings['widget_list']; ?>:</label><br />
-		
+
 					<select id="<?php echo $this->get_field_id( 'list' ); ?>" name="<?php echo $this->get_field_name( 'list' ); ?>" style="max-width: 100%;">
 						<option value=""><?php echo $kol_email->strings['select_list']; ?></option>
-		
+
 						<?php foreach( $this->email_data['lists_options'] as $list => $name ) : ?>
 							<option value="<?php esc_attr_e( $list ); ?>" <?php selected( $val['list'], $list, true ); ?>><?php echo $name; ?></option>
 						<?php endforeach; ?>
 					</select>
 				</p>
-		
+
 				<div id="<?php echo $this->get_field_id( 'kol-email' ); ?>-form" style="display: <?php echo $val['list'] ? 'block' : 'none'; ?>">
-		
+
 					<!-- Thank You / Already Subscribed -->
-			
+
 					<?php if ( $service == 'aweber' ) :
 						$pages = array();
-			
+
 						foreach ( get_pages() as $p )
 							$pages[$p->ID] = $p->post_title;
-			
+
 						$select = array(
 							'thank_you' => array(
 								'label' => $kol_email->strings['thank_you_page']
@@ -289,12 +289,12 @@ class kol_email_form extends WP_Widget {
 							)
 						);
 					?>
-			
+
 						<?php foreach ( $select as $select_id => $select_field ) : ?>
-			
+
 							<p>
 								<label for="<?php echo $this->get_field_id( $select_id ); ?>"><?php echo $select_field['label']; ?>:</label><br />
-					
+
 								<select id="<?php echo $this->get_field_id( $select_id ); ?>" name="<?php echo $this->get_field_name( $select_id ); ?>" style="max-width: 100%;">
 									<option value=""><?php echo $kol_email->strings['select_page']; ?></option>
 
@@ -303,57 +303,57 @@ class kol_email_form extends WP_Widget {
 									<?php endforeach; ?>
 								</select>
 							</p>
-			
+
 						<?php endforeach; ?>
-			
+
 					<?php endif; ?>
-			
+
 					<!-- Input Fields -->
-			
+
 					<h4><?php echo $kol_email->strings['input_fields']; ?></h4>
-			
+
 					<!-- Show Name Field -->
-			
+
 					<p>
 						<input id="<?php echo $this->get_field_id( 'form_fields_name' ); ?>" type="checkbox" name="<?php echo $this->get_field_name( 'form_fields_name' ); ?>" value="1" <?php checked( $val['form_fields_name'] ); ?> />
-			
+
 						<label for="<?php echo $this->get_field_id( 'form_fields_name' ); ?>"><?php echo $kol_email->strings['widget_field_name']; ?></label>
 					</p>
-			
+
 					<!-- Name Label -->
-			
+
 					<div id="<?php echo $this->get_field_id( 'name_label' ); ?>-field" style="display: <?php echo $val['form_fields_name'] ? 'block' : 'none'; ?>">
-			
+
 						<label for="<?php echo $this->get_field_id( 'name_label' ); ?>"><?php echo $kol_email->strings['widget_name_label']; ?>:</label>
-			
+
 						<input type="text" id="<?php echo $this->get_field_id( 'name_label' ); ?>" name="<?php echo $this->get_field_name( 'name_label' ); ?>" value="<?php esc_attr_e( $val['name_label'] ); ?>" placeholder="<?php echo $kol_email->strings['name_label']; ?>" class="widefat" />
-			
+
 					</div>
-			
+
 					<!-- Email Label -->
-			
+
 					<p>
 						<label for="<?php echo $this->get_field_id( 'email_label' ); ?>"><?php echo $kol_email->strings['widget_email_label']; ?>:</label>
-			
+
 						<input type="text" id="<?php echo $this->get_field_id( 'email_label' ); ?>" name="<?php echo $this->get_field_name( 'email_label' ); ?>" value="<?php esc_attr_e( $val['email_label'] ); ?>" placeholder="<?php echo $kol_email->strings['email_label']; ?>" class="widefat" />
 					</p>
-			
+
 					<!-- Button Text -->
-			
+
 					<p>
 						<label for="<?php echo $this->get_field_id( 'button_text' ); ?>"><?php echo $kol_email->strings['widget_button_text']; ?>:</label>
-			
+
 						<input type="text" id="<?php echo $this->get_field_id( 'button_text' ); ?>" name="<?php echo $this->get_field_name( 'button_text' ); ?>" value="<?php esc_attr_e( $val['button_text'] ); ?>" placeholder="<?php echo $kol_email->strings['button_text']; ?>" class="widefat" />
 					</p>
-			
+
 					<!-- Tracking -->
-			
+
 					<?php if ( $service == 'aweber' ) : ?>
-			
+
 						<h4><?php echo $kol_email->strings['tracking_management']; ?></h4>
-			
+
 						<!-- Form ID, Ad Tracking, Image ID -->
-			
+
 						<?php $tracking = array(
 							'form_id' => array(
 								'label' => $kol_email->strings['widget_form_id']
@@ -365,26 +365,26 @@ class kol_email_form extends WP_Widget {
 								'label' => $kol_email->strings['widget_image_id']
 							)
 						); ?>
-			
+
 						<?php foreach ( $tracking as $tracking_id => $tracking_field ) : ?>
-			
+
 							<p>
 								<label for="<?php echo $this->get_field_id( $tracking_id ); ?>"><?php echo $tracking_field['label']; ?>:</label>
-					
+
 								<input type="text" id="<?php echo $this->get_field_id( $tracking_id ); ?>" name="<?php echo $this->get_field_name( $tracking_id ); ?>" value="<?php esc_attr_e( $val[$tracking_id] ); ?>" class="widefat" />
 							</p>
-			
+
 						<?php endforeach; ?>
-			
+
 					<?php endif; ?>
 
 					<h4><?php echo $kol_email->strings['advanced']; ?></h4>
-	
+
 					<!-- Classes -->
-			
+
 					<p>
 						<label for="<?php echo $this->get_field_id( 'classes' ); ?>"><?php echo $kol_email->strings['widget_classes']; ?>:</label>
-			
+
 						<input type="text" id="<?php echo $this->get_field_id( 'classes' ); ?>" name="<?php echo $this->get_field_name( 'classes' ); ?>" value="<?php esc_attr_e( $val['classes'] ); ?>" placeholder="form-full" class="widefat" />
 					</p>
 
@@ -392,9 +392,9 @@ class kol_email_form extends WP_Widget {
 				</div>
 
 				<script>
-		
+
 					// Toggle conditional fields
-		
+
 					( function() {
 						document.getElementById( '<?php echo $this->get_field_id( 'list' ); ?>' ).onchange = function() {
 							document.getElementById( '<?php echo $this->get_field_id( 'kol-email' ); ?>-form' ).style.display = this.value != '' ? 'block' : 'none';
@@ -403,9 +403,9 @@ class kol_email_form extends WP_Widget {
 							document.getElementById( '<?php echo $this->get_field_id( 'name_label' ); ?>-field' ).style.display = this.checked ? 'block' : 'none';
 						}
 					})();
-		
+
 				</script>
-	
+
 			<?php endif; ?>
 
 		<?php endif; ?>
