@@ -40,15 +40,18 @@ class kol_email_mailchimp {
 		$this->apiUrl = parse_url("http://api.mailchimp.com/" . $this->version . "/?output=php");
 		$this->api_key = $apikey;
 	}
+
 	function setTimeout($seconds){
 		if (is_int($seconds)){
 			$this->timeout = $seconds;
 			return true;
 		}
 	}
+
 	function getTimeout(){
 		return $this->timeout;
 	}
+
 	function useSecure($val){
 		if ($val===true){
 			$this->secure = true;
