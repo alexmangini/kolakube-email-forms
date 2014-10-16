@@ -117,7 +117,7 @@ class kol_email_form extends WP_Widget {
 				elseif ( $service == 'mailchimp' ) {
 					$data = get_option( 'kol_email_data' );
 					$lists      = $data['lists_data'];
-					$lists_data = parse_url( $lists[$list]['url'] ); // convert URL params to array
+					$lists_data = parse_url( $lists[ $list ]['url'] ); // convert URL params to array
 					parse_str( $lists_data['query'] ); // convert query params to string vars (creates variables $u and $id)
 
 					$action    = esc_url_raw( $lists_data['scheme'] . '://' . $lists_data['host'] . '/subscribe/post/' );
@@ -188,10 +188,10 @@ class kol_email_form extends WP_Widget {
 		$val['form_fields_name'] = $new['form_fields_name'] ? 1 : 0;
 
 		foreach ( array( 'desc', 'name_label', 'email_label', 'button_text', 'form_id', 'ad_tracking', 'tracking_image' ) as $text_field )
-			$val[$text_field] = sanitize_text_field( $new[$text_field] );
+			$val[ $text_field ] = sanitize_text_field( $new[ $text_field ] );
 
 		foreach ( array( 'thank_you', 'already_subscribed' ) as $select_field )
-			$val[$select_field] = in_array( $new[$select_field], $this->email_data['save'][$select_field]['options'] ) ? $new[$select_field] : '';
+			$val[ $select_field ] = in_array( $new[ $select_field ], $this->email_data['save'][ $select_field ]['options'] ) ? $new[ $select_field ] : '';
 
 		$val['classes'] = strip_tags( $new['classes'] );
 
@@ -287,7 +287,7 @@ class kol_email_form extends WP_Widget {
 						$pages = array();
 
 						foreach ( get_pages() as $p )
-							$pages[$p->ID] = $p->post_title;
+							$pages[ $p->ID ] = $p->post_title;
 
 						$select = array(
 							'thank_you' => array(
@@ -380,7 +380,7 @@ class kol_email_form extends WP_Widget {
 							<p>
 								<label for="<?php echo $this->get_field_id( $tracking_id ); ?>"><?php echo $tracking_field['label']; ?>:</label>
 
-								<input type="text" id="<?php echo $this->get_field_id( $tracking_id ); ?>" name="<?php echo $this->get_field_name( $tracking_id ); ?>" value="<?php esc_attr_e( $val[$tracking_id] ); ?>" class="widefat" />
+								<input type="text" id="<?php echo $this->get_field_id( $tracking_id ); ?>" name="<?php echo $this->get_field_name( $tracking_id ); ?>" value="<?php esc_attr_e( $val[ $tracking_id ] ); ?>" class="widefat" />
 							</p>
 
 						<?php endforeach; ?>

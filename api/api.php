@@ -120,12 +120,12 @@ class kol_email_api {
 
 		parse_str( stripslashes( $_POST['form'] ), $form );
 
-		$api_key = $form[$this->_id]['api_key'];
+		$api_key = $form[ $this->_id ]['api_key'];
 
 		if ( ! wp_verify_nonce( $form['_wpnonce'], "{$this->_id}-options" ) )
 			die ( $kol_email->strings['nonce_error'] );
 
-		$service = $form[$this->_id]['service'];
+		$service = $form[ $this->_id ]['service'];
 
 		$data         = array();
 		$data['save'] = array(
@@ -202,9 +202,9 @@ class kol_email_api {
 			$id   = esc_attr( $list['id'] );
 			$name = esc_attr( $list['name'] );
 
-			$data['lists_ids'][]        = $id;
-			$data['lists_options'][$id] = $name;
-			$data['lists_data'][$id]    = array(
+			$data['lists_ids'][]          = $id;
+			$data['lists_options'][ $id ] = $name;
+			$data['lists_data'][ $id ]    = array(
 				'name' => $name,
 				'url'  => esc_url_raw( $list['subscribe_url_long'] ),
 			);
@@ -239,8 +239,8 @@ class kol_email_api {
 		foreach ( $account->lists->data['entries'] as $list ) {
 			$id = $list['unique_list_id'];
 
-			$data['lists_ids'][]        = esc_attr( $id );
-			$data['lists_options'][$id] = esc_attr( $list['name'] );
+			$data['lists_ids'][]          = esc_attr( $id );
+			$data['lists_options'][ $id ] = esc_attr( $list['name'] );
 		}
 
 		foreach ( get_pages() as $p )
