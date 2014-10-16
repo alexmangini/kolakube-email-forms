@@ -13,11 +13,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 class kol_email_api {
 
 	public $auth = array(
 		'aweber'    => 'https://auth.aweber.com/1.0/oauth/authorize_app/e5957609',
-		'mailchimp' => 'http://admin.mailchimp.com/account/api-key-popup/'
+		'mailchimp' => 'http://admin.mailchimp.com/account/api-key-popup/',
 	);
 
 
@@ -130,21 +131,21 @@ class kol_email_api {
 		$data['save'] = array(
 			'form_fields' => array(
 				'type'    => 'checkbox',
-				'options' => array( 'name' )
+				'options' => array( 'name' ),
 			),
 			'form_style' => array(
 				'type'    => 'checkbox',
-				'options' => array( 'full' )
+				'options' => array( 'full' ),
 			),
 			'name_label' => array(
-				'type' => 'text'
+				'type' => 'text',
 			),
 			'email_label' => array(
-				'type' => 'text'
+				'type' => 'text',
 			),
 			'button_text' => array(
-				'type' => 'text'
-			)
+				'type' => 'text',
+			),
 		);
 
 		if ( ! empty( $api_key ) )
@@ -205,14 +206,14 @@ class kol_email_api {
 			$data['lists_options'][$id] = $name;
 			$data['lists_data'][$id]    = array(
 				'name' => $name,
-				'url'  => esc_url_raw( $list['subscribe_url_long'] )
+				'url'  => esc_url_raw( $list['subscribe_url_long'] ),
 			);
 		}
 
 		$data['save'] = array_merge( array(
 			'list' => array(
 				'type'    => 'select',
-				'options' => $data['lists_ids']
+				'options' => $data['lists_ids'],
 			)
 		), $data['save'] );
 
@@ -249,24 +250,24 @@ class kol_email_api {
 			array(
 				'list' => array(
 					'type'    => 'select',
-					'options' => $data['lists_ids']
+					'options' => $data['lists_ids'],
 				),
 				'thank_you' => array(
 					'type'    => 'select',
-					'options' => $pages
+					'options' => $pages,
 				),
 				'already_subscribed' => array(
 					'type'    => 'select',
-					'options' => $pages
+					'options' => $pages,
 				),
 				'form_id' => array(
-					'type' => 'text'
+					'type' => 'text',
 				),
 				'ad_tracking' => array(
-					'type' => 'text'
+					'type' => 'text',
 				),
 				'tracking_image' => array(
-					'type' => 'text'
+					'type' => 'text',
 				)
 			),
 			$data['save']

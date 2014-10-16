@@ -120,7 +120,7 @@ class kol_email_init {
 			'button_text'                  => __( 'Get Instant Access', 'kol-email-forms' ),
 			'input_fields'                 => __( 'Input Fields', 'kol-email-forms' ),
 			'tracking_management'          => __( 'Tracking &amp; Management', 'kol-email-forms' ),
-			'advanced'                     => __( 'Advanced', 'kol-email-forms' )
+			'advanced'                     => __( 'Advanced', 'kol-email-forms' ),
 		);
 	}
 

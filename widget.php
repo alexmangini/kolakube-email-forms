@@ -20,11 +20,11 @@ class kol_email_form extends WP_Widget {
 		'a' => array(
 			'href'   => array(),
 			'class'  => array(),
-			'id'     => array()
+			'id'     => array(),
 		),
 		'span' => array(
 			'class'  => array(),
-			'id'     => array()
+			'id'     => array(),
 		),
 		'img' => array(
 			'src'    => array(),
@@ -32,11 +32,11 @@ class kol_email_form extends WP_Widget {
 			'height' => array(),
 			'width'  => array(),
 			'class'  => array(),
-			'id'     => array()
+			'id'     => array(),
 		),
 		'br' => array(),
 		'b'  => array(),
-		'i'  => array()
+		'i'  => array(),
 	);
 
 
@@ -219,7 +219,7 @@ class kol_email_form extends WP_Widget {
 				'ad_tracking'        => '',
 				'tracking_image'     => '',
 				'custom_code'        => '',
-				'classes'            => ''
+				'classes'            => '',
 			)
 		);
 
