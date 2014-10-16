@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class kol_email_mailchimp {
-	var $version = "1.3";
+	var $version = '1.3';
 	var $errorMessage;
 	var $errorCode;
 
@@ -50,25 +50,25 @@ class kol_email_mailchimp {
 	 * @param string $apikey Your MailChimp apikey
 	 * @param string $secure Whether or not this should use a secure connection
 	 */
-	function kol_email_mailchimp($apikey, $secure=false) {
+	function kol_email_mailchimp( $apikey, $secure = false ) {
 		$this->secure = $secure;
-		$this->apiUrl = parse_url("http://api.mailchimp.com/" . $this->version . "/?output=php");
+		$this->apiUrl = parse_url( 'http://api.mailchimp.com/' . $this->version . '/?output=php' );
 		$this->api_key = $apikey;
 	}
 
-	function setTimeout($seconds){
-		if (is_int($seconds)){
+	function setTimeout( $seconds ) {
+		if ( is_int( $seconds ) ) {
 			$this->timeout = $seconds;
 			return true;
 		}
 	}
 
-	function getTimeout(){
+	function getTimeout() {
 		return $this->timeout;
 	}
 
-	function useSecure($val){
-		if ($val===true){
+	function useSecure( $val ) {
+		if ( $val === true ) {
 			$this->secure = true;
 		} else {
 			$this->secure = false;
@@ -79,96 +79,96 @@ class kol_email_mailchimp {
 	 * Actually connect to the server and call the requested methods, parsing the result
 	 * You should never have to call this function manually
 	 */
-	function __call($method, $params) {
-		$dc = "us1";
-		if (strstr($this->api_key,"-")){
-			list($key, $dc) = explode("-",$this->api_key,2);
-			if (!$dc) $dc = "us1";
+	function __call( $method, $params ) {
+		$dc = 'us1';
+		if ( strstr( $this->api_key, '-' ) ) {
+			list( $key, $dc ) = explode( '-', $this->api_key, 2 );
+			if ( ! $dc ) $dc = 'us1';
 		}
-		$host = $dc.".".$this->apiUrl["host"];
+		$host = $dc.'.'.$this->apiUrl['host'];
 
-		$this->errorMessage = "";
-		$this->errorCode = "";
+		$this->errorMessage = '';
+		$this->errorCode = '';
 		$sep_changed = false;
 		//sigh, apparently some distribs change this to &amp; by default
-		if (ini_get("arg_separator.output")!="&"){
+		if ( ini_get( 'arg_separator.output' ) !== '&' ) {
 			$sep_changed = true;
-			$orig_sep = ini_get("arg_separator.output");
-			ini_set("arg_separator.output", "&");
+			$orig_sep = ini_get( 'arg_separator.output' );
+			ini_set( 'arg_separator.output', '&' );
 		}
 		//mutate params
 		$mutate = array();
-		$mutate["apikey"] = $this->api_key;
-		foreach($params as $k=>$v){
-			$mutate[$this->function_map[$method][$k]] = $v;
+		$mutate['apikey'] = $this->api_key;
+		foreach ( $params as $k => $v ) {
+			$mutate[ $this->function_map[ $method ][ $k ] ] = $v;
 		}
-		$post_vars = http_build_query($mutate);
-		if ($sep_changed){
-			ini_set("arg_separator.output", $orig_sep);
+		$post_vars = http_build_query( $mutate );
+		if ( $sep_changed ) {
+			ini_set( 'arg_separator.output', $orig_sep );
 		}
 
-		$payload = "POST " . $this->apiUrl["path"] . "?" . $this->apiUrl["query"] . "&method=" . $method . " HTTP/1.0\r\n";
-		$payload .= "Host: " . $host . "\r\n";
-		$payload .= "User-Agent: MCAPImini/" . $this->version ."\r\n";
-		$payload .= "Content-type: application/x-www-form-urlencoded\r\n";
-		$payload .= "Content-length: " . strlen($post_vars) . "\r\n";
-		$payload .= "Connection: close \r\n\r\n";
+		$payload  = 'POST ' . $this->apiUrl['path'] . '?' . $this->apiUrl['query'] . '&method=' . $method . ' HTTP/1.0' . "\r\n";
+		$payload .= 'Host: ' . $host . "\r\n";
+		$payload .= 'User-Agent: MCAPImini/' . $this->version . "\r\n";
+		$payload .= 'Content-type: application/x-www-form-urlencoded' . "\r\n";
+		$payload .= 'Content-length: ' . strlen( $post_vars ) . "\r\n";
+		$payload .= 'Connection: close ' . "\r\n\r\n";
 		$payload .= $post_vars;
 
 		ob_start();
-		if ($this->secure){
-			$sock = fsockopen("ssl://".$host, 443, $errno, $errstr, 30);
+		if ( $this->secure ) {
+			$sock = fsockopen( 'ssl://'.$host, 443, $errno, $errstr, 30 );
 		} else {
-			$sock = fsockopen($host, 80, $errno, $errstr, 30);
+			$sock = fsockopen( $host, 80, $errno, $errstr, 30 );
 		}
-		if(!$sock) {
-			$this->errorMessage = "Could not connect (ERR $errno: $errstr)";
-			$this->errorCode = "-99";
+		if ( ! $sock ) {
+			$this->errorMessage = 'Could not connect (ERR $errno: $errstr)';
+			$this->errorCode    = '-99';
 			ob_end_clean();
 			return false;
 		}
 
-		$response = "";
-		fwrite($sock, $payload);
-		stream_set_timeout($sock, $this->timeout);
-		$info = stream_get_meta_data($sock);
-		while ((!feof($sock)) && (!$info["timed_out"])) {
-			$response .= fread($sock, $this->chunkSize);
-			$info = stream_get_meta_data($sock);
+		$response = '';
+		fwrite( $sock, $payload );
+		stream_set_timeout( $sock, $this->timeout );
+		$info = stream_get_meta_data( $sock );
+		while ( ( ! feof( $sock ) ) && ( ! $info['timed_out'] ) ) {
+			$response .= fread( $sock, $this->chunkSize );
+			$info = stream_get_meta_data( $sock );
 		}
-		fclose($sock);
+		fclose( $sock );
 		ob_end_clean();
-		if ($info["timed_out"]) {
-			$this->errorMessage = "Could not read response (timed out)";
+		if ( $info['timed_out'] ) {
+			$this->errorMessage = 'Could not read response (timed out)';
 			$this->errorCode = -98;
 			return false;
 		}
 
-		list($headers, $response) = explode("\r\n\r\n", $response, 2);
-		$headers = explode("\r\n", $headers);
+		list( $headers, $response) = explode( "\r\n\r\n", $response, 2 );
+		$headers = explode( "\r\n", $headers );
 		$errored = false;
-		foreach($headers as $h){
-			if (substr($h,0,26)==="X-MailChimp-API-Error-Code"){
+		foreach ( $headers as $h ) {
+			if ( substr( $h, 0, 26 ) === 'X-MailChimp-API-Error-Code' ) {
 				$errored = true;
-				$error_code = trim(substr($h,27));
+				$error_code = trim( substr( $h, 27 ) );
 				break;
 			}
 		}
 
-		if(ini_get("magic_quotes_runtime")) $response = stripslashes($response);
+		if (ini_get( 'magic_quotes_runtime' ) ) $response = stripslashes( $response );
 
-		$serial = unserialize($response);
-		if($response && $serial === false) {
-			$response = array("error" => "Bad Response.  Got This: " . $response, "code" => "-99");
+		$serial = unserialize( $response );
+		if ( $response && $serial === false ) {
+			$response = array( 'error' => 'Bad Response.  Got This: ' . $response, 'code' => '-99' );
 		} else {
 			$response = $serial;
 		}
-		if($errored && is_array($response) && isset($response["error"])) {
-			$this->errorMessage = $response["error"];
-			$this->errorCode = $response["code"];
+		if ( $errored && is_array( $response ) && isset( $response['error'] ) ) {
+			$this->errorMessage = $response['error'];
+			$this->errorCode = $response['code'];
 			return false;
-		} elseif($errored){
-			$this->errorMessage = "No error message was found";
+		} elseif ( $errored ) {
+			$this->errorMessage = 'No error message was found';
 			$this->errorCode = $error_code;
 			return false;
 		}
