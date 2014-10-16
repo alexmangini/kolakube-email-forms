@@ -26,7 +26,13 @@
  * along with this program; if not, see http://www.gnu.org/licenses/.
  *
  * Just do what makes you happy.
-*/
+ *
+ * @package     KolakubeEmailForms
+ * @copyright   Copyright (c) 2014, Alex Mangini
+ * @license     GPL-2.0+
+ * @link        http://kolakube.com/
+ * @since       1.0.0
+ */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 

@@ -1,4 +1,13 @@
 <?php
+/**
+ * Kolakube Email Forms Admin Page
+ *
+ * @package     KolakubeEmailForms
+ * @copyright   Copyright (c) 2014, Alex Mangini
+ * @license     GPL-2.0+
+ * @link        http://kolakube.com/
+ * @since       1.0.0
+ */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 

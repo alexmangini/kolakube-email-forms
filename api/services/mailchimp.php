@@ -1,4 +1,14 @@
 <?php
+/**
+ * Kolakube Email Forms Mailchimp Integration
+ *
+ * @package     KolakubeEmailForms
+ * @copyright   Copyright (c) 2014, Alex Mangini
+ * @license     GPL-2.0+
+ * @link        http://kolakube.com/
+ * @since       1.0.0
+ */
+
 class kol_email_mailchimp {
 	var $version = "1.3";
 	var $errorMessage;
