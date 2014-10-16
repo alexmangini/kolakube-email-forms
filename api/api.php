@@ -189,7 +189,7 @@ class kol_email_api {
 
 
 	public function mailchimp_connect( $api_key, $data ) {
-		include_once( 'services/mailchimp.php' );
+		include_once( KOL_EMAIL_DIR . 'api/services/mailchimp.php' );
 
 		$api       = new kol_email_mailchimp( $api_key );
 		$get_lists = $api->lists();
@@ -221,7 +221,7 @@ class kol_email_api {
 
 
 	public function aweber_connect( $api_key, $data ) {
-		require_once( 'services/aweber_api/aweber_api.php' );
+		require_once( KOL_EMAIL_DIR . 'api/services/vendor/aweber_api/aweber_api.php' );
 
 		$keys = array();
 
