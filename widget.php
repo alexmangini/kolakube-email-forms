@@ -6,13 +6,13 @@ class kol_email_form extends WP_Widget {
 
 	public $_allowed_html = array(
 		'a' => array(
-			'href'  => array(),
-			'class' => array(),
-			'id'    => array()
+			'href'   => array(),
+			'class'  => array(),
+			'id'     => array()
 		),
 		'span' => array(
-			'class' => array(),
-			'id'    => array()
+			'class'  => array(),
+			'id'     => array()
 		),
 		'img' => array(
 			'src'    => array(),
@@ -192,27 +192,24 @@ class kol_email_form extends WP_Widget {
 	public function form( $val ) {
 		global $kol_email;
 
-		$val = wp_parse_args( (array) $val, array(
-			'title' => '',
-			'desc'  => '',
-
-			'list' => '',
-
-			'form_fields_name' => '',
-			'name_label'       => '',
-			'email_label'      => '',
-			'button_text'      => '',
-
-			'thank_you'          => '',
-			'already_subscribed' => '',
-			'form_id'            => '',
-			'ad_tracking'        => '',
-			'tracking_image'     => '',
-
-			'custom_code' => '',
-
-			'classes' => ''
-		) );
+		$val = wp_parse_args( (array) $val,
+			array(
+				'title'              => '',
+				'desc'               => '',
+				'list'               => '',
+				'form_fields_name'   => '',
+				'name_label'         => '',
+				'email_label'        => '',
+				'button_text'        => '',
+				'thank_you'          => '',
+				'already_subscribed' => '',
+				'form_id'            => '',
+				'ad_tracking'        => '',
+				'tracking_image'     => '',
+				'custom_code'        => '',
+				'classes'            => ''
+			)
+		);
 
 		$service = $this->email['service'];
 		$data    = isset( $this->email_data['lists_options'] ) ? $this->email_data['lists_options'] : '';

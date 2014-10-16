@@ -234,29 +234,32 @@ class kol_email_api {
 		foreach ( get_pages() as $p )
 			$pages[] = $p->ID;
 
-		$data['save'] = array_merge( array(
-			'list' => array(
-				'type'    => 'select',
-				'options' => $data['lists_ids']
+		$data['save'] = array_merge(
+			array(
+				'list' => array(
+					'type'    => 'select',
+					'options' => $data['lists_ids']
+				),
+				'thank_you' => array(
+					'type'    => 'select',
+					'options' => $pages
+				),
+				'already_subscribed' => array(
+					'type'    => 'select',
+					'options' => $pages
+				),
+				'form_id' => array(
+					'type' => 'text'
+				),
+				'ad_tracking' => array(
+					'type' => 'text'
+				),
+				'tracking_image' => array(
+					'type' => 'text'
+				)
 			),
-			'thank_you' => array(
-				'type'    => 'select',
-				'options' => $pages
-			),
-			'already_subscribed' => array(
-				'type'    => 'select',
-				'options' => $pages
-			),
-			'form_id' => array(
-				'type' => 'text'
-			),
-			'ad_tracking' => array(
-				'type' => 'text'
-			),
-			'tracking_image' => array(
-				'type' => 'text'
-			)
-		), $data['save'] );
+			$data['save']
+		);
 
 		update_option( 'kol_email_data', $data );
 	}
