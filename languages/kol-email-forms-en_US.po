@@ -1,0 +1,209 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kolakube Email Forms\n"
+"POT-Creation-Date: 2014-09-30 12:05-0600\n"
+"PO-Revision-Date: 2014-09-30 12:07-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: kol-email-forms.php:69
+msgid "Kolakube Email Forms"
+msgstr ""
+
+#: kol-email-forms.php:70
+msgid "Email Service Setup"
+msgstr ""
+
+#: kol-email-forms.php:72
+#, php-format
+msgid ""
+"To use the Kolakube Email Form widget, first <a href=\"%s\">connect to an "
+"email service</a>."
+msgstr ""
+
+#: kol-email-forms.php:74
+msgid "Select a List&hellip;"
+msgstr ""
+
+#: kol-email-forms.php:75
+msgid "Select a Page&hellip;"
+msgstr ""
+
+#: kol-email-forms.php:77
+msgid "Step 1: Connect to Your Email Service"
+msgstr ""
+
+#: kol-email-forms.php:78
+msgid "Step 2: Get Your Authorization Code"
+msgstr ""
+
+#: kol-email-forms.php:80
+msgid ""
+"Before you can insert any email forms to your site, you need to connect to "
+"your email service provider below. If yours isn't listed in the dropdown, "
+"select \"Custom Form Code\" for further instructions."
+msgstr ""
+
+#: kol-email-forms.php:82
+msgid "Select an Email Service&hellip;"
+msgstr ""
+
+#: kol-email-forms.php:83
+msgid "MailChimp"
+msgstr ""
+
+#: kol-email-forms.php:84
+msgid "AWeber"
+msgstr ""
+
+#: kol-email-forms.php:86
+msgid "Custom HTML Form Code"
+msgstr ""
+
+#: kol-email-forms.php:87
+msgid "To activate Custom HTML Forms, click the save button below."
+msgstr ""
+
+#: kol-email-forms.php:88
+msgid "Custom HTML Forms are activated."
+msgstr ""
+
+#: kol-email-forms.php:89 kol-email-forms.php:101
+#, php-format
+msgid ""
+"You can now use Kolakube products like the <a href=\"%s\">Email Page Lead</"
+"a> and the <a href=\"%2s\">email widget</a> to display email forms "
+"throughout your website."
+msgstr ""
+
+#: kol-email-forms.php:91
+msgid ""
+"Could not connect to your email service. Your Authorization code may be "
+"incorrect. Reload the page to try again."
+msgstr ""
+
+#: kol-email-forms.php:92
+msgid "Get Authorization Code"
+msgstr ""
+
+#: kol-email-forms.php:93
+msgid ""
+"Click the \"Get Authorization Code\" button above and login to your account "
+"and get your authorization code. Once you have it, copy it and paste it into "
+"the text field below and click \"Connect.\""
+msgstr ""
+
+#: kol-email-forms.php:95
+msgid "Connect"
+msgstr ""
+
+#: kol-email-forms.php:97
+msgid "Disconnect"
+msgstr ""
+
+#: kol-email-forms.php:98
+msgid ""
+"Disconnecting your email service will set your form settings back to "
+"default. All email forms on your website will be deleted until you reconnect "
+"to an email service. Are you sure you want to continue?"
+msgstr ""
+
+#: kol-email-forms.php:100
+msgid "You are connected to"
+msgstr ""
+
+#: kol-email-forms.php:103
+msgid "Sorry, your nonce did not verify."
+msgstr ""
+
+#: kol-email-forms.php:105
+msgid "Kolakube Email Signup Form"
+msgstr ""
+
+#: kol-email-forms.php:106
+msgid "Easily place email signup forms throughout your website."
+msgstr ""
+
+#: kol-email-forms.php:108
+msgid "Title"
+msgstr ""
+
+#: kol-email-forms.php:109
+msgid "Description"
+msgstr ""
+
+#: kol-email-forms.php:110
+msgid "Custom HTML Code"
+msgstr ""
+
+#: kol-email-forms.php:111
+msgid "Email List"
+msgstr ""
+
+#: kol-email-forms.php:112
+msgid "Ask for subscribers name in signup form"
+msgstr ""
+
+#: kol-email-forms.php:113
+msgid "Name Field Label"
+msgstr ""
+
+#: kol-email-forms.php:114
+msgid "Email Field Label"
+msgstr ""
+
+#: kol-email-forms.php:115
+msgid "Submit Button Text"
+msgstr ""
+
+#: kol-email-forms.php:116
+msgid "Form ID"
+msgstr ""
+
+#: kol-email-forms.php:117
+msgid "Ad Tracking"
+msgstr ""
+
+#: kol-email-forms.php:118
+msgid "Image ID"
+msgstr ""
+
+#: kol-email-forms.php:120
+msgid "Thank You Page"
+msgstr ""
+
+#: kol-email-forms.php:121
+msgid "Already Subscribed Page"
+msgstr ""
+
+#: kol-email-forms.php:123
+msgid "Enter your name&hellip;"
+msgstr ""
+
+#: kol-email-forms.php:124
+msgid "Enter your email&hellip;"
+msgstr ""
+
+#: kol-email-forms.php:125
+msgid "Get Instant Access"
+msgstr ""
+
+#: kol-email-forms.php:127
+msgid "Input Fields"
+msgstr ""
+
+#: kol-email-forms.php:128
+msgid "Tracking &amp; Management"
+msgstr ""
